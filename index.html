@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Développeur | SEKOU CAMARA</title>
+    
+    <!-- Importation des polices Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    
+    <!-- Importation des icônes Phosphor -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <style>
+        /* --- VARIABLES CSS --- */
+        :root {
+            --bg-color: #050505;
+            --surface-color: #0f0f0f;
+            --surface-hover: #1a1a1a;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --border-color: #333333;
+            --accent-color: #ffffff;
+            
+            --font-serif: 'Playfair Display', serif;
+            --font-sans: 'Inter', sans-serif;
+            
+            --spacing-xs: 0.5rem;
+            --spacing-sm: 1rem;
+            --spacing-md: 2rem;
+            --spacing-lg: 4rem;
+            --spacing-xl: 8rem;
+            
+            --transition-slow: 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+            --transition-fast: 0.3s ease;
+        }
+
+        /* --- RESET & BASE --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: var(--font-sans);
+            font-weight: 300;
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: var(--transition-fast);
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        /* --- TYPOGRAPHIE --- */
+        h1, h2, h3, h4 {
+            font-family: var(--font-serif);
+            font-weight: 400;
+            line-height: 1.2;
+            color: var(--text-primary);
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            margin-bottom: var(--spacing-lg);
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 40px;
+            height: 1px;
+            background-color: var(--text-secondary);
+        }
+
+        p {
+            color: var(--text-secondary);
+            font-size: 1.05rem;
+        }
+
+        /* --- HEADER & LOGO --- */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 1.5rem 4rem; /* Espace pour le logo et le menu */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background: rgba(5, 5, 5, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        /* --- STYLE DU LOGO (FORMAT PORTRAIT) --- */
+.logo {
+    display: flex; /* Centre le logo dans sa zone */
+    align-items: center;
+    height: 70px; /* Hauteur de la zone réservée au logo dans le header */
+}
+
+.logo img {
+    /* La hauteur est limitée pour ne pas dépasser du menu */
+    height: 100%; 
+    max-height: 70px; /* <--- IMPORTANT : C'est ici que tu règles la taille. Augmente si ton logo est trop petit (ex: 70px) */
+    
+    /* La largeur s'adapte automatiquement pour ne pas déformer l'image */
+    width: auto;     
+    
+    object-fit: contain;
+    display: block;
+    
+    /* Effet Noir & Blanc par défaut */
+    filter: grayscale(100%) contrast(1.2); 
+    transition: var(--transition-fast);
+}
+
+/* Effet au survol : Retour à la couleur */
+.logo:hover img {
+    filter: grayscale(0%);
+}
+
+        /* Navigation */
+        nav ul {
+            display: flex;
+            gap: var(--spacing-md);
+        }
+
+        nav a {
+            font-size: 0.85rem; /* Texte menu petit et élégant */
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-secondary);
+            position: relative;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1px;
+            bottom: -4px;
+            left: 0;
+            background-color: var(--accent-color);
+            transition: var(--transition-fast);
+        }
+
+        nav a:hover {
+            color: var(--text-primary);
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 0 var(--spacing-lg);
+            position: relative;
+        }
+
+        .hero-subtitle {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: var(--text-secondary);
+            margin-bottom: var(--spacing-sm);
+            opacity: 0;
+            animation: fadeIn 1s ease forwards 0.2s;
+        }
+
+        .hero-title {
+            font-size: clamp(3.5rem, 8vw, 7rem);
+            margin-bottom: var(--spacing-md);
+            opacity: 0;
+            animation: slideUp 1s ease forwards 0.5s;
+        }
+
+        .hero-title span {
+            font-style: italic;
+            font-family: var(--font-serif);
+            color: var(--text-secondary);
+        }
+
+        .hero-description {
+            max-width: 500px;
+            margin-bottom: var(--spacing-lg);
+            opacity: 0;
+            animation: fadeIn 1s ease forwards 0.8s;
+        }
+
+        .cta-btn {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            border: 1px solid var(--text-primary);
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            transition: var(--transition-fast);
+            opacity: 0;
+            animation: fadeIn 1s ease forwards 1s;
+            width: fit-content;
+            background: transparent;
+            cursor: pointer;
+        }
+
+        .cta-btn:hover {
+            background-color: var(--text-primary);
+            color: var(--bg-color);
+        }
+
+        /* --- LAYOUT GENERAL --- */
+        section {
+            padding: var(--spacing-xl) var(--spacing-lg);
+        }
+
+        /* --- ABOUT SECTION --- */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-lg);
+            align-items: center;
+        }
+
+        .about-image {
+            position: relative;
+            overflow: hidden;
+            aspect-ratio: 3/4;
+        }
+
+        .about-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(100%) contrast(1.1);
+            transition: var(--transition-slow);
+        }
+
+        .about-image:hover img {
+            filter: grayscale(0%) contrast(1);
+            transform: scale(1.03);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-lg);
+            border-top: 1px solid var(--border-color);
+            padding-top: var(--spacing-md);
+        }
+
+        .stat-item h4 {
+            font-size: 2.5rem;
+            font-family: var(--font-sans);
+            font-weight: 300;
+        }
+
+        .stat-item span {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-secondary);
+        }
+
+        /* --- SERVICES / SKILLS --- */
+        .services-list {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .service-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: var(--spacing-md) 0;
+            border-bottom: 1px solid var(--border-color);
+            transition: var(--transition-fast);
+            cursor: default;
+        }
+
+        .service-item:hover {
+            padding-left: var(--spacing-sm);
+            border-bottom-color: var(--text-primary);
+        }
+
+        .service-item h3 {
+            font-size: 1.5rem;
+            font-family: var(--font-sans);
+            font-weight: 300;
+        }
+
+        .service-item i {
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+            transition: var(--transition-fast);
+        }
+
+        .service-item:hover i {
+            transform: translateX(10px);
+            color: var(--text-primary);
+        }
+
+        /* --- PROJECTS --- */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: var(--spacing-md);
+        }
+
+        .project-card {
+            background-color: var(--surface-color);
+            border: 1px solid var(--border-color);
+            transition: var(--transition-fast);
+        }
+
+        .project-card:hover {
+            border-color: var(--text-secondary);
+            transform: translateY(-5px);
+        }
+
+        .project-image {
+            width: 100%;
+            height: 300px;
+            overflow: hidden;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .project-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(100%);
+            transition: var(--transition-slow);
+        }
+
+        .project-card:hover .project-image img {
+            filter: grayscale(0%);
+        }
+
+        .project-info {
+            padding: var(--spacing-md);
+        }
+
+        .project-tags {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 1rem;
+        }
+
+        .tag {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border: 1px solid var(--border-color);
+            padding: 4px 8px;
+            color: var(--text-secondary);
+        }
+
+        .project-title {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            font-family: var(--font-serif);
+        }
+
+        .project-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .project-link:hover {
+            text-decoration: underline;
+        }
+
+        /* --- CONTACT --- */
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-xl);
+        }
+
+        .contact-info p {
+            margin-bottom: var(--spacing-md);
+        }
+
+        .contact-details div {
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .contact-details span {
+            display: block;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .contact-details a {
+            font-size: 1.5rem;
+            font-family: var(--font-serif);
+        }
+
+        .form-group {
+            position: relative;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .form-input {
+            width: 100%;
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem 0;
+            color: var(--text-primary);
+            font-family: var(--font-sans);
+            font-size: 1rem;
+            outline: none;
+            transition: var(--transition-fast);
+        }
+
+        .form-input:focus {
+            border-bottom-color: var(--text-primary);
+        }
+
+        .form-input::placeholder {
+            color: var(--text-secondary);
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            padding: var(--spacing-lg);
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: var(--spacing-md);
+        }
+
+        .social-links a {
+            font-size: 1.5rem;
+            transition: var(--transition-fast);
+        }
+
+        .social-links a:hover {
+            color: var(--text-primary);
+            transform: translateY(-3px);
+        }
+
+        /* --- ANIMATIONS --- */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 768px) {
+            :root {
+                --spacing-lg: 3rem;
+                --spacing-xl: 5rem;
+            }
+
+            header {
+                padding: 1.5rem 2rem;
+            }
+
+            nav ul {
+                display: none; /* Pour simplifier sur mobile */
+            }
+
+            .about-grid, .contact-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .about-image {
+                order: -1;
+                aspect-ratio: 16/9;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-title {
+                font-size: 3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header & Navigation -->
+    <header>
+        <!-- LOGO IMAGE -->
+        <div class="logo">
+            <a href="#">
+                <!-- IMPORTANT: Remplace l'URL ci-dessous par ton propre fichier logo (ex: 'logo.png') -->
+                <img src="122222.png" alt="Logo Portfolio">
+            </a>
+        </div>
+
+        <nav>
+            <ul>
+                <li><a href="#about">À propos</a></li>
+                <li><a href="#expertise">Expertise</a></li>
+                <li><a href="#work">Projets</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <p class="hero-subtitle">Portfolio Créatif</p>
+            <h1 class="hero-title">Construire le <span>Futur</span> Ensemble.</h1>
+            <p class="hero-description">
+Créer du lien entre vos ambitions et l'écran, c'est là que réside mon engagement. Je m'imprègne de votre univers pour concevoir des solutions qui ne ressemblent à aucune autre, car elles sont le reflet exact de votre identité.            </p>
+            <a href="#work" class="cta-btn">Voir mes travaux</a>
+        </section>
+
+        <!-- About Section -->
+        <section id="about">
+            <h2 class="section-title">À Propos</h2>
+            <div class="about-grid">
+                <div class="about-content">
+                    <p style="margin-bottom: 1.5rem;">
+Je crée des sites et des applications pour ceux qui exigent le meilleur. Mais avant d'être développeur, je suis un auditeur. Je me mets à l'écoute absolue de vos attentes et de vos non-dits pour transformer votre intuition en une réalité numérique où la technique s'efface au profit de l'émotion et de l'esthétique.                    </p>
+                    <p>
+                        Je crois que le luxe à l'ère numérique ne réside pas dans l'abondance, mais dans la simplicité et la pertinence. Chaque ligne de code est écrite avec intention, chaque pixel est placé avec soin.
+                    </p>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <h4>Rigueur absolue </h4>
+                            <span></span>
+                        </div>
+                        <div class="stat-item">
+                            <h4>Ponctualité sans faille</h4>
+                            <span></span>
+                        </div>
+                        <div class="stat-item">
+                            <h4>100%</h4>
+                            <span>Satisfaction client</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-image">
+                    <img src="https://picsum.photos/seed/minimal/600/800?grayscale" alt="Portrait du développeur">
+                </div>
+            </div>
+        </section>
+
+        <!-- Expertise Section -->
+        <section id="expertise">
+            <h2 class="section-title">Expertise</h2>
+            <div class="services-list">
+                <div class="service-item">
+                    <h3>Développement Front-End</h3>
+                    <i class="ph ph-arrow-right"></i>
+                </div>
+                <div class="service-item">
+                    <h3>Architecture Back-End</h3>
+                    <i class="ph ph-arrow-right"></i>
+                </div>
+                <div class="service-item">
+                    <h3>UI/UX Design</h3>
+                    <i class="ph ph-arrow-right"></i>
+                </div>
+                <div class="service-item">
+                    <h3>Optimisation des Performances</h3>
+                    <i class="ph ph-arrow-right"></i>
+                </div>
+            </div>
+        </section>
+
+        <!-- Selected Projects -->
+        <section id="work">
+            <h2 class="section-title">Sélection de Projets</h2>
+            <div class="projects-grid">
+                
+                <!-- Project 1 -->
+                <article class="project-card">
+                    <div class="project-image">
+                        <img src="https://picsum.photos/seed/tech/600/400?grayscale" alt="Projet Architecture">
+                    </div>
+                    <div class="project-info">
+                        <div class="project-tags">
+                            <span class="tag">HTML, CSS</span>
+                            <span class="tag">Three.js, PHP</span>
+                        </div>
+                        <h3 class="project-title">CANTICENCE</h3>
+                        <p>Site vitrine immersif pour une marque émergente.</p>
+                        <a href="project1.html" class="project-link">Voir le projet <i class="ph ph-arrow-up-right"></i></a>
+                    </div>
+                </article>
+
+                <!-- Project 2 -->
+                <article class="project-card">
+                    <div class="project-image">
+                        <img src="https://picsum.photos/seed/tech/600/400?grayscale" alt="Projet E-commerce">
+                    </div>
+                    <div class="project-info">
+                        <div class="project-tags">
+                            <span class="tag">HTML, CSS, PYTHON</span>
+                            <span class="tag">JS, PHP, SQL</span>
+                        </div>
+                        <h3 class="project-title">ModelPrototype</h3>
+                        <p>Mise en relation d'entités dans le milieu du mannequinat.</p>
+                        <a href="projet2.html" class="project-link">Voir le projet <i class="ph ph-arrow-up-right"></i></a>
+                    </div>
+                </article>
+
+                <!-- Project 3 -->
+                <article class="project-card">
+                    <div class="project-image">
+                        <img src="https://picsum.photos/seed/tech/600/400?grayscale" alt="Projet SaaS">
+                    </div>
+                    <div class="project-info">
+                        <div class="project-tags">
+                            <span class="tag">HTML, CSS</span>
+                            <span class="tag">JS, SQL, PHP</span>
+                        </div>
+                        <h3 class="project-title">FJ COSMETIQUE (Projet en cours )</h3>
+                        <p>Boutique en ligne de cosmétiques.</p>
+                        <a href="projet3.html" class="project-link">Voir le projet <i class="ph ph-arrow-up-right"></i></a>
+                    </div>
+                </article>
+
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact">
+            <h2 class="section-title">Contact</h2>
+            <div class="contact-container">
+                <div class="contact-info">
+                    <p>Vous avez un projet ambitieux ? Discutons de la manière dont je peux vous aider à le concrétiser avec excellence.</p>
+                    
+                    <div class="contact-details">
+                        <div>
+                            <span>Email</span>
+                            <a href="mailto:hello@alexdev.com">sekoucmr@icloud.com</a>
+                        </div>
+                        <div>
+                            <span>Téléphone</span>
+                            <a href="tel:+33123456789">+225 07 15 55 93 88</a>
+                        </div>
+                        <div>
+                            
+                        </div>
+                    </div>
+                </div>
+
+                <form action="https://formspree.io/f/mwvqgrbb" method="POST" class="contact-form">
+                    <div class="form-group">
+                        <input type="text" name="name" class="form-input" placeholder="Votre Nom" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" name="email" class="form-input" placeholder="Votre Email" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="subject" class="form-input" placeholder="Sujet du projet" required>
+                    </div>
+                    <div class="form-group">
+                        <textarea name="message" class="form-input" rows="4" placeholder="Parlez-moi de votre vision..." required></textarea>
+                    </div>
+                    <button type="submit" class="cta-btn">Envoyer</button>
+                </form>
+
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="copyright">
+            &copy; 2026 Sekou Camara. Tous droits réservés.
+        </div>
+        <div class="social-links">
+            <a href="#" aria-label="LinkedIn"><i class="ph ph-linkedin-logo"></i></a>
+            <a href="#" aria-label="GitHub"><i class="ph ph-github-logo"></i></a>
+            <a href="#" aria-label="Twitter"><i class="ph ph-twitter-logo"></i></a>
+        </div>
+    </footer>
+
+</body>
+</html>
